@@ -1,0 +1,195 @@
+{% extends "index.html" %}
+{% load static %}
+{% block style %}
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+{% endblock style %}
+<!------------------------------------- Contant Start ----------------------------------->
+{% block body %}
+    {% if update %}
+        <div class="card bg-light">
+            <article class="card-body mx-auto" style="max-width: 600px;">
+                <h4 class="card-title mt-3 mb-3 text-center"><b style="font-size: 30px; color: blue;">{{method}}</b></h4>    
+                <form method="POST">
+                    {% csrf_token %}
+                    {% include 'message.html' %}
+                    <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                        </div>
+                        <input name="full_name" class="form-control" placeholder="Full name" type="text" required>
+                    </div> <!-- form-group// -->
+
+                    <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                        </div>
+                        <input name="roll" class="form-control" placeholder="Roll Number" type="number" required>
+                    </div> <!-- form-group// -->
+
+                    <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-calendar" aria-hidden="true"></i> </span>
+                        </div>
+                        <input name="date_of_birth" class="form-control" placeholder="Date Of Birth" type="date" required>
+                    </div> <!-- form-group// -->
+
+                    <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-address-book" aria-hidden="true"></i> </span>
+                        </div>
+                        <input name="address" class="form-control" placeholder="Address" type="text" required>
+                    </div> <!-- form-group// -->
+
+                    <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-pencil-square" aria-hidden="true"></i> </span>
+                        </div>
+                        <input name="marks" class="form-control" placeholder="Marks" type="number" required>
+                    </div> <!-- form-group// -->
+
+                    <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-book" aria-hidden="true"></i> </span>
+                        </div>
+                        <select class="form-control" name="gread" required>
+                            <option selected disabled>Please select your gread</option>
+                            <option value="A+">A+</option>
+                            <option value="A">A</option>
+                            <option value="A-">A-</option>
+                            <option value="B">B</option>
+                            <option value="C">C</option>
+                            <option value="D">D</option>
+                            <option value="E">E</option>
+                            <option value="F">F</option>
+                        </select>
+                    </div> <!-- form-group// -->
+        
+                    <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-pencil-square-o" aria-hidden="true"></i> </span>
+                        </div>
+                        <select class="form-control" name="result" required>
+                            <option selected disabled >Please select your result</option>
+                            <option value="Pass">Pass</option>
+                            <option value="Fail">Fail</option>
+                        </select>
+                    </div> <!-- form-group// -->
+
+
+                    <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-calendar" aria-hidden="true"></i> </i> </span>
+                        </div>
+                        <input name="pass_date" class="form-control" placeholder="Result Publish" type="date" required>
+                    </div> <!-- form-group// -->
+                    
+
+                    <div class="form-group mt-5">
+                        <button type="submit" class="btn btn-primary btn-block"> Create New Record  </button>
+                    </div> <!-- form-group// -->                                                                  
+                </form>
+            </article>
+        </div> <!-- card.// -->
+    {% else %}
+        <div class="card bg-light">
+            <article class="card-body mx-auto" style="max-width: 600px;">
+                <h4 class="card-title mt-3 mb-5 text-center"><b style="font-size: 40px; color: blue;" >Add New Student Record</b></h4>    
+                <form method="POST">
+                    {% csrf_token %}
+                    {% include 'message.html' %}
+                    <div class="form-group input-group">
+                        <label class="col-md-5 control-label"><b>Full Name</b></label>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                        </div>
+                        <input name="full_name" class="form-control" placeholder="Full name" type="text">
+                    </div> <!-- form-group// -->
+                    
+                    <div class="form-group input-group">
+                        <label class="col-md-5 control-label"><b>Roll Number</b></label>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                        </div>
+                        <input name="roll" class="form-control" placeholder="Roll Number" type="number">
+                    </div> <!-- form-group// -->
+        
+                    <div class="form-group input-group">
+                        <label class="col-md-5 control-label"><b>Date Of Birth</b></label>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-calendar" aria-hidden="true"></i> </span>
+                        </div>
+                        <input name="date_of_birth" class="form-control" placeholder="Date Of Birth" type="date">
+                    </div> <!-- form-group// -->
+        
+                    <div class="form-group input-group">
+                        <label class="col-md-5 control-label"><b>Address</b></label>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-address-book" aria-hidden="true"></i> </span>
+                        </div>
+                        <input name="address" class="form-control" placeholder="Address" type="text">
+                    </div> <!-- form-group// -->
+        
+                    <div class="form-group input-group">
+                        <label class="col-md-5 control-label"><b>Marks</b></label>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-pencil-square" aria-hidden="true"></i> </span>
+                        </div>
+                        <input name="marks" class="form-control" placeholder="Marks" type="number">
+                    </div> <!-- form-group// -->
+        
+                    <div class="form-group input-group">
+                        <label class="col-md-5 control-label"><b>Gread</b></label>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-book" aria-hidden="true"></i> </span>
+                        </div>
+                        <select class="form-control" name="gread">
+                            <option selected disabled>Please select your gread</option>
+                            <option value="A+">A+</option>
+                            <option value="A">A</option>
+                            <option value="A-">A-</option>
+                            <option value="B">B</option>
+                            <option value="C">C</option>
+                            <option value="D">D</option>
+                            <option value="E">E</option>
+                            <option value="F">F</option>
+                        </select>
+                    </div> <!-- form-group// -->
+        
+                    <div class="form-group input-group">
+                        <label class="col-md-5 control-label"><b>Result</b></label>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-pencil-square-o" aria-hidden="true"></i> </span>
+                        </div>
+                        <select class="form-control" name="result">
+                            <option selected disabled >Please select your result</option>
+                            <option value="Pass">Pass</option>
+                            <option value="Fail">Fail</option>
+                        </select>
+                    </div> <!-- form-group// -->
+        
+        
+                    <div class="form-group input-group">
+                        <label class="col-md-5 control-label"><b>Result Publish</b></label>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-calendar" aria-hidden="true"></i> </i> </span>
+                        </div>
+                        <input name="pass_date" class="form-control" placeholder="Result Publish" type="date">
+                    </div> <!-- form-group// -->
+                    
+        
+                    <div class="form-group mt-5">
+                        <button type="submit" class="btn btn-primary btn-block"> Create New Record  </button>
+                    </div> <!-- form-group// -->                                                                  
+                </form>
+            </article>
+        </div> <!-- card.// -->
+    {% endif %}
+{% endblock body %}
+<!-------------------------------------- Contant End ------------------------------------>
+
+
+
+{% block js %}
+{% endblock js %}

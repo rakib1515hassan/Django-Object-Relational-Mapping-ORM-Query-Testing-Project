@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Home{% endblock title %}</title>
+    <!-- Boostrap -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-REPLACE-WITH-CDN-INTEGRITY-HASH" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+
+<!-------------------------- CSS Link Start -------------------------->
+
+
+<!--------------------------- CSS Link End --------------------------->
+    {% block style %}
+    
+    {% endblock style %} 
+</head>
+
+<body>
+    <!-- Header Start -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+          <a class="navbar-brand" href="{% url 'home' %}"><b style="font-size: 45px; font-family: Gabriola;">Mr.Rakib-IT</b></a>
+          <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+
+            <li class="nav-item {% block h_active %} {% endblock h_active %}">
+              <a class="nav-link" href="{% url 'home' %}"><b>Home</b><span class="sr-only">(current)</span></a>
+            </li>
+
+            <li class="nav-item {% block 1_active %} {% endblock 1_active %}">
+              <a class="nav-link" href="{% url 'QuerySetAPI_1' %}"><b>QuerySetAPI-1</b><span class="sr-only">(current)</span></a>
+            </li>
+
+            <li class="nav-item {% block 2_active %} {% endblock 2_active %}">
+              <a class="nav-link" href="{% url 'QuerySetAPI_2' %}"><b>QuerySetAPI-2</b><span class="sr-only">(current)</span></a>
+            </li>
+
+            <li class="nav-item {% block 3_active %} {% endblock 3_active %}">
+              <a class="nav-link" href="{% url 'QuerySetAPI_3' %}"><b>QuerySetAPI-3</b><span class="sr-only">(current)</span></a>
+            </li>
+
+            <li class="nav-item {% block 4_active %} {% endblock 4_active %}">
+              <a class="nav-link" href="{% url 'QuerySetAPI_4' %}"><b>QuerySetAPI-4</b><span class="sr-only">(current)</span></a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="#">About Us <span class="sr-only">(current)</span></a>
+            </li>
+
+          </ul>
+          <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          </form>
+        </div>
+    </nav>
+    <!-- Header End -->
+    <div class="container">
+        {% block body %}
+
+
+
+
+        {% endblock body %}
+    </div>
+    
+
+    <!-- Footer Start -->
+    <footer class="bg-light text-center text-white">
+        <!-- Grid container -->
+        <div class="container p-4 pb-0">
+          <!-- Section: Social media -->
+          <section class="mb-4">
+            <!-- Facebook -->
+            <a
+              class="btn text-white btn-floating m-1"
+              style="background-color: #3b5998;"
+              href="#!"
+              role="button"
+              >
+              <i class="fa fa-facebook" aria-hidden="true"></i>
+            </a>
+      
+            <!-- Twitter -->
+            <a
+              class="btn text-white btn-floating m-1"
+              style="background-color: #55acee;"
+              href="#!"
+              role="button"
+              >
+              <i class="fa fa-twitter" aria-hidden="true"></i>
+            </a>
+      
+            <!-- Google -->
+            <a
+              class="btn text-white btn-floating m-1"
+              style="background-color: #dd4b39;"
+              href="#!"
+              role="button"
+              >
+              <i class="fa fa-google" aria-hidden="true"></i>
+            </a>
+      
+            <!-- Instagram -->
+            <a
+              class="btn text-white btn-floating m-1"
+              style="background-color: #ac2bac;"
+              href="#!"
+              role="button"
+              >
+              <i class="fa fa-instagram" aria-hidden="true"></i>
+            </a>
+      
+            <!-- Linkedin -->
+            <a
+              class="btn text-white btn-floating m-1"
+              style="background-color: #0082ca;"
+              href="#!"
+              role="button"
+              >
+              <i class="fa fa-linkedin-square" aria-hidden="true"></i>
+            </a>
+            <!-- Github -->
+            <a
+              class="btn text-white btn-floating m-1"
+              style="background-color: #333333;"
+              href="#!"
+              role="button"
+              >
+              <i class="fa fa-github" aria-hidden="true"></i>
+            </a>
+          </section>
+          <!-- Section: Social media -->
+        </div>
+        <!-- Grid container -->
+      
+        <!-- Copyright -->
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+          © 2020 Copyright:
+          <a class="text-white" href="https://mdbootstrap.com/">Mr.Rakib-IT.com</a>
+        </div>
+        <!-- Copyright -->
+      </footer>
+    <!-- Footer End -->
+
+<!-------------------------- Java Scripts Start -------------------------->
+
+
+<!-------------------------- Java Scripts End -------------------------->
+{% block js %}
+
+{% endblock js %}
+</body>
+</html>

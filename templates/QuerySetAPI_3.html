@@ -1,0 +1,407 @@
+{% extends "index.html" %}
+{% load static %}
+{% block title %}Display | QuerySetAPI-3{% endblock title %}
+{% block 3_active %} active {% endblock 3_active %}
+{% block style %}
+    <!-- For Delete Modal -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+
+    <!-- For Datatable -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css" rel="stylesheet" id="bootstrap-css">
+    <link href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap4.min.css" rel="stylesheet" id="bootstrap-css">
+    <style>
+        .add_btn {
+            background-color: #D25380;
+            font: bold;
+            color: white;
+        }
+        .add_btn:hover {
+            background-color: #3e8e41;
+            color: rgb(246, 246, 244);
+        }
+
+    </style>
+{% endblock style %}
+
+{% block body %}
+    <div class="col-md-12 mb-5">
+        <h3 class="text-center" style="margin-top: 50px; color: #3214a9;"><b>Django Object-Relational Mapper(ORM)</b></h3>
+        <p>One of the most powerful features of Django is its Object-Relational Mapper (ORM), which enables you to interact with your database, like you would with SQL. In fact, Django's ORM is just a pythonical way to create SQL to query and manipulate your database and get results in a pythonic fashion. Well, I say just a way, but it's actually really clever engineering that takes advantage of some of the more complex parts of Python to make developers' lives easier.</p>
+        <h4 class="text-center" style="margin-top: 15px; color: #14a934;"><b>Field Lookups</b></h4>
+        <p>
+            Field lookups are how you specify the meet of an SQL WHERE clause. They're specified as keyword arguments to the QuerySet method 
+            filter(), exclude() and get().
+        </p>
+        <span><a href="{% url 'add_student' %}" class="btn mb-3 add_btn">Add New Record</a></span>  
+        <div class="table-responsive">
+            {% include 'message.html' %}
+            <table id="example" class="table table-striped table-bordered" style="width:100%">
+            <!-- <table class="table table-striped table-bordered" style="width:100%"> -->
+                <thead style="background-color: #8696FE; color: #f5f1f1;">
+                    <tr>
+                        <th>No</th>
+                        <th>Method</th>
+                        <th>Querry Set</th>
+                        <th>Querry</th>
+                        <th>Result</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>1</td>
+                        <td> exact </td>
+                        <td><b style="color: #3214a9;">.filter(marks__exact = 50)</b></td>
+                        <td><b style="color: #1faa42;">Student.objects.filter(marks__exact = 50)</b></td>
+                        <td><a class="btn btn-danger btn-sm" href="{% url 'exact_mark' %}">
+                            <span class="glyphicon glyphicon-trash">Go</span></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td> lt </td>
+                        <td><b style="color: #3214a9;">.filter(marks__lt = 50)</b></td>
+                        <td><b style="color: #1faa42;">Student.objects.filter(marks__lt = 50)</b></td>
+                        <td><a class="btn btn-danger btn-sm" href="{% url 'less_then_mark' %}">
+                            <span class="glyphicon glyphicon-trash">Go</span></a>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>3</td>
+                        <td> lte </td>
+                        <td><b style="color: #3214a9;">.filter(marks__lte = 50)</b></td>
+                        <td><b style="color: #1faa42;">Student.objects.filter(marks__lte = 50)</b></td>
+                        <td><a class="btn btn-danger btn-sm" href="{% url 'less_then_or_equeal' %}">
+                            <span class="glyphicon glyphicon-trash">Go</span></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td> gt </td>
+                        <td><b style="color: #3214a9;">.filter(marks__gt = 50)</b></td>
+                        <td><b style="color: #1faa42;">Student.objects.filter(marks__gt = 50)</b></td>
+                        <td><a class="btn btn-danger btn-sm" href="{% url 'getter_then_mark' %}">
+                            <span class="glyphicon glyphicon-trash">Go</span></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td> gte </td>
+                        <td><b style="color: #3214a9;">.filter(marks__gte = 50)</b></td>
+                        <td><b style="color: #1faa42;">Student.objects.filter(marks__gte = 50)</b></td>
+                        <td><a class="btn btn-danger btn-sm" href="{% url 'getter_then_or_equeal' %}">
+                            <span class="glyphicon glyphicon-trash">Go</span></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td> exact </td>
+                        <td><b style="color: #3214a9;">.filter(name__exact = 'Md Rakib Hassan')</b></td>
+                        <td><b style="color: #1faa42;">Student.objects.filter(name__exact = 'Md Rakib Hassan')</b></td>
+                        <td><a class="btn btn-danger btn-sm" href="{% url 'exact_name' %}">
+                            <span class="glyphicon glyphicon-trash">Go</span></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td> iexact </td>
+                        <td><b style="color: #3214a9;">.filter(name__iexact = 'md rakib hassan')</b></td>
+                        <td><b style="color: #1faa42;">Student.objects.filter(name__iexact = 'md rakib hassan')</b></td>
+                        <td><a class="btn btn-danger btn-sm" href="{% url 'iexact_name' %}">
+                            <span class="glyphicon glyphicon-trash">Go</span></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td> contains </td>
+                        <td><b style="color: #3214a9;">.filter(name__contains = 'md')</b></td>
+                        <td><b style="color: #1faa42;">Student.objects.filter(name__contains = 'md')</b></td>
+                        <td><a class="btn btn-danger btn-sm" href="{% url 'contains_name' %}">
+                            <span class="glyphicon glyphicon-trash">Go</span></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>9</td>
+                        <td> icontains </td>
+                        <td><b style="color: #3214a9;">.filter(name__icontains = 'md')</b></td>
+                        <td><b style="color: #1faa42;">Student.objects.filter(name__icontains = 'md')</b></td>
+                        <td><a class="btn btn-danger btn-sm" href="{% url 'icontains_name' %}">
+                            <span class="glyphicon glyphicon-trash">Go</span></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td> in </td>
+                        <td><b style="color: #3214a9;">.filter(id__in = [1, 3, 4, 9, 10, 19, 4444])</b></td>
+                        <td><b style="color: #1faa42;">Student.objects.filter(id__in = [1, 3, 4, 9, 10, 19, 4444])</b></td>
+                        <td><a class="btn btn-danger btn-sm" href="{% url 'id_in' %}">
+                            <span class="glyphicon glyphicon-trash">Go</span></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>11</td>
+                        <td> in </td>
+                        <td><b style="color: #3214a9;">.filter(marks_in = [31, 32])</b></td>
+                        <td><b style="color: #1faa42;">Student.objects.filter(marks_in = [31, 32])</b></td>
+                        <td><a class="btn btn-danger btn-sm" href="{% url 'marks_in' %}">
+                            <span class="glyphicon glyphicon-trash">Go</span></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>11</td>
+                        <td> startswith </td>
+                        <td><b style="color: #3214a9;">.filter(name__startswith = 'A')</b></td>
+                        <td><b style="color: #1faa42;">Student.objects.filter(name__startswith = 'A')</b></td>
+                        <td><a class="btn btn-danger btn-sm" href="{% url 'startswith_name' %}">
+                            <span class="glyphicon glyphicon-trash">Go</span></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>12</td>
+                        <td> istartswith </td>
+                        <td><b style="color: #3214a9;">.filter(name__istartswith = 'A')</b></td>
+                        <td><b style="color: #1faa42;">Student.objects.filter(name__istartswith = 'A')</b></td>
+                        <td><a class="btn btn-danger btn-sm" href="{% url 'istartswith_name' %}">
+                            <span class="glyphicon glyphicon-trash">Go</span></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>13</td>
+                        <td> endswith </td>
+                        <td><b style="color: #3214a9;">.filter(name__endswith = 'N')</b></td>
+                        <td><b style="color: #1faa42;">Student.objects.filter(name__endswith = 'N')</b></td>
+                        <td><a class="btn btn-danger btn-sm" href="{% url 'endswith_name' %}">
+                            <span class="glyphicon glyphicon-trash">Go</span></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>14</td>
+                        <td> iendswith </td>
+                        <td><b style="color: #3214a9;">.filter(name__iendswith = 'N')</b></td>
+                        <td><b style="color: #1faa42;">Student.objects.filter(name__iendswith = 'N')</b></td>
+                        <td><a class="btn btn-danger btn-sm" href="{% url 'iendswith_name' %}">
+                            <span class="glyphicon glyphicon-trash">Go</span></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>15</td>
+                        <td> range </td>
+                        <td><b style="color: #3214a9;">.filter(marks__range = ( 33 , 100 ))</b></td>
+                        <td><b style="color: #1faa42;">Student.objects.filter(marks__range = ( 33 , 100 ))</b></td>
+                        <td><a class="btn btn-danger btn-sm" href="{% url 'range_marks' %}">
+                            <span class="glyphicon glyphicon-trash">Go</span></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>16</td>
+                        <td> range </td>
+                        <td><b style="color: #3214a9;">.filter(date_of_birth__range = ('2000-01-01' , '2023-12-30'))</b></td>
+                        <td><b style="color: #1faa42;">Student.objects.filter(date_of_birth__range = ('2000-01-01' , '2023-12-30'))</b></td>
+                        <td><a class="btn btn-danger btn-sm" href="{% url 'range_birthOFdate' %}">
+                            <span class="glyphicon glyphicon-trash">Go</span></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>17</td>
+                        <td> date </td>
+                        <td><b style="color: #3214a9;">.filter(join__date = date(2015, 11, 14))</b></td>
+                        <td><b style="color: #1faa42;">Student.objects.filter(join__date = date(2015, 11, 14))</b></td>
+                        <td><a class="btn btn-danger btn-sm" href="{% url 'date_join' %}">
+                            <span class="glyphicon glyphicon-trash">Go</span></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>18</td>
+                        <td> date </td>
+                        <td><b style="color: #3214a9;">.filter(join__date__lt = date(2015, 11, 14))</b></td>
+                        <td><b style="color: #1faa42;">Student.objects.filter(join__date__lt = date(2015, 11, 14))</b></td>
+                        <td><a class="btn btn-danger btn-sm" href="{% url 'date_join_lessthen' %}">
+                            <span class="glyphicon glyphicon-trash">Go</span></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>19</td>
+                        <td> date </td>
+                        <td><b style="color: #3214a9;">.filter(join__date__gt = date(2015, 11, 14))</b></td>
+                        <td><b style="color: #1faa42;">Student.objects.filter(join__date__gt = date(2015, 11, 14))</b></td>
+                        <td><a class="btn btn-danger btn-sm" href="{% url 'date_join_geterthen' %}">
+                            <span class="glyphicon glyphicon-trash">Go</span></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>20</td>
+                        <td> date </td>
+                        <td><b style="color: #3214a9;">.filter(join__date__gte = date(2015, 11, 14))</b></td>
+                        <td><b style="color: #1faa42;">Student.objects.filter(join__date__gte = date(2015, 11, 14))</b></td>
+                        <td><a class="btn btn-danger btn-sm" href="{% url 'date_join_geterthen_equel' %}">
+                            <span class="glyphicon glyphicon-trash">Go</span></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>21</td>
+                        <td> year </td>
+                        <td><b style="color: #3214a9;">.filter(pass_date__year = 2015)</b></td>
+                        <td><b style="color: #1faa42;">Student.objects.filter(pass_date__year = 2015)</b></td>
+                        <td><a class="btn btn-danger btn-sm" href="{% url 'year_pass' %}">
+                            <span class="glyphicon glyphicon-trash">Go</span></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>22</td>
+                        <td> year </td>
+                        <td><b style="color: #3214a9;">.filter(pass_date__year__lte = 2015)</b></td>
+                        <td><b style="color: #1faa42;">Student.objects.filter(pass_date__year__lte = 2015)</b></td>
+                        <td><a class="btn btn-danger btn-sm" href="{% url 'year_pass__lte' %}">
+                            <span class="glyphicon glyphicon-trash">Go</span></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>23</td>
+                        <td> month </td>
+                        <td><b style="color: #3214a9;">.filter(pass_date__month__lte = 2)</b></td>
+                        <td><b style="color: #1faa42;">Student.objects.filter(pass_date__month__lte = 2)</b></td>
+                        <td><a class="btn btn-danger btn-sm" href="{% url 'month_pass__lte' %}">
+                            <span class="glyphicon glyphicon-trash">Go</span></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>24</td>
+                        <td> day </td>
+                        <td><b style="color: #3214a9;">.filter(pass_date__day__lte = 5)</b></td>
+                        <td><b style="color: #1faa42;">Student.objects.filter(pass_date__day__lte = 5)</b></td>
+                        <td><a class="btn btn-danger btn-sm" href="{% url 'day_pass__lte' %}">
+                            <span class="glyphicon glyphicon-trash">Go</span></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>25</td>
+                        <td> week </td>
+                        <td><b style="color: #3214a9;">.filter(pass_date__week__lte = 13)</b></td>
+                        <td><b style="color: #1faa42;">Student.objects.filter(pass_date__week__lte = 13)</b></td>
+                        <td><a class="btn btn-danger btn-sm" href="{% url 'week_pass__lte' %}">
+                            <span class="glyphicon glyphicon-trash">Go</span></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>26</td>
+                        <td> week_day </td>
+                        <td><b style="color: #3214a9;">.filter(pass_date__week_day = 1)</b></td>
+                        <td><b style="color: #1faa42;">Student.objects.filter(pass_date__week_day = 1)</b></td>
+                        <td><a class="btn btn-danger btn-sm" href="{% url 'week_day_pass' %}">
+                            <span class="glyphicon glyphicon-trash">Go</span></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>27</td>
+                        <td> week_day </td>
+                        <td><b style="color: #3214a9;">.filter(pass_date__week_day__lte = 2)</b></td>
+                        <td><b style="color: #1faa42;">Student.objects.filter(pass_date__week_day__lte = 2)</b></td>
+                        <td><a class="btn btn-danger btn-sm" href="{% url 'week_day_pass__lte' %}">
+                            <span class="glyphicon glyphicon-trash">Go</span></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>28</td>
+                        <td> quarter </td>
+                        <td><b style="color: #3214a9;">.filter(pass_date__quarter = 1)</b></td>
+                        <td><b style="color: #1faa42;">Student.objects.filter(pass_date__quarter = 1)</b></td>
+                        <td><a class="btn btn-danger btn-sm" href="{% url 'quarter_pass' %}">
+                            <span class="glyphicon glyphicon-trash">Go</span></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>29</td>
+                        <td> time </td>
+                        <td><b style="color: #3214a9;">.filter(join__time__gt = time(13, 00))</b></td>
+                        <td><b style="color: #1faa42;">Student.objects.filter(join__time__gt = time(13, 00))</b></td>
+                        <td><a class="btn btn-danger btn-sm" href="{% url 'time_join' %}">
+                            <span class="glyphicon glyphicon-trash">Go</span></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>30</td>
+                        <td> hour </td>
+                        <td><b style="color: #3214a9;">.filter(join__hour__lt = 12)</b></td>
+                        <td><b style="color: #1faa42;">Student.objects.filter(join__hour__lt = 12)</b></td>
+                        <td><a class="btn btn-danger btn-sm" href="{% url 'hour_join' %}">
+                            <span class="glyphicon glyphicon-trash">Go</span></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>31</td>
+                        <td> minute </td>
+                        <td><b style="color: #3214a9;">.filter(join__minute__lt = 30)</b></td>
+                        <td><b style="color: #1faa42;">Student.objects.filter(join__minute__lt = 30)</b></td>
+                        <td><a class="btn btn-danger btn-sm" href="{% url 'minute_join' %}">
+                            <span class="glyphicon glyphicon-trash">Go</span></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>32</td>
+                        <td> second </td>
+                        <td><b style="color: #3214a9;">.filter(join__second__lt = 50)</b></td>
+                        <td><b style="color: #1faa42;">Student.objects.filter(join__second__lt = 50)</b></td>
+                        <td><a class="btn btn-danger btn-sm" href="{% url 'second_join' %}">
+                            <span class="glyphicon glyphicon-trash">Go</span></a>
+                        </td>
+                    </tr>
+                    
+                    
+                    
+
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+
+
+
+
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+{% endblock body %}
+
+
+{% block js %}
+<!-------------------------- Java Scripts Start -------------------------->
+<!-- For Delete Modal -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
+
+
+ <!-- For Datatable -->
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#example').DataTable({
+        "aLengthMenu": [[3, 5, 10, 25, -1], [3, 5, 10, 25, "All"]],
+            "iDisplayLength": 25
+        }
+        );
+    } );
+</script>
+
+
+<!-------------------------- Java Scripts End -------------------------->
+{% endblock js %}
+
