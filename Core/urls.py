@@ -6,4 +6,5 @@ urlpatterns = [
     path('', include('QuerySetAPI.urls')),
     path('', include('QuerySetAPI_2.urls')),
     path('', include('QuerySetAPI_4.urls')),
+    path('', include('QuerySetAPI_5.urls')),
 ]

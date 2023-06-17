@@ -1,0 +1,118 @@
+{% extends "index.html" %}
+{% load static %}
+{% block title %}Display | QuerySetAPI-5{% endblock title %}
+{% block 5_active %} active {% endblock 5_active %}
+
+{% block style %}
+<!-- For Datatable -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css" rel="stylesheet" id="bootstrap-css">
+<link href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap4.min.css" rel="stylesheet" id="bootstrap-css">
+<style>
+    .add_btn {
+        background-color: #D25380;
+        font: bold;
+        color: white;
+    }
+    .add_btn:hover {
+        background-color: #3e8e41;
+        color: rgb(246, 246, 244);
+    }
+
+</style>
+{% endblock style %}
+
+{% block body %}
+<div class="col-md-12 mb-5">
+    <h3 class="text-center" style="margin-top: 50px; color: #3214a9;"><b>Django Object-Relational Mapper(ORM)</b></h3>
+    <h4 class="text-center" style="margin-top: 15px; color: #14a934;"><b>Q Object</b></h4>
+    <p>
+        Q object is an object used to encapsulate a collection of keyword arguments. These keyword arguments are specified as in "Field lookups".
+    </p>
+    <p>If you need to execute more complex queries, you can use Q objects.</p>
+    <p>Q objects can be combined using the & and | operators. When an operator is used on two Q objects, it yields a new Q object.</p>
+    <p><b>from django.db.models import Q</b></p>
+    <p><b>& (AND) Operator</b>
+        Example:- Student.objects.filter(Q(id=6) & Q(roll=106))
+    </p>
+    <p><b>| (OR) Operator</b>
+        Example:- Student.objects.filter(Q(id=6) | Q(roll=108))
+    </p>
+    <p><b>~Negation Operator</b>
+        Example:- Student.objects.filter(~Q(id=6))
+    </p>
+    
+    <!-- <span><a href="{% url 'add_student' %}" class="btn mb-3 add_btn">Add New Record</a></span>   -->
+    <div class="table-responsive">
+        {% include 'message.html' %}
+        <table id="example" class="table table-striped table-bordered" style="width:100%">
+        <!-- <table class="table table-striped table-bordered" style="width:100%"> -->
+            <thead style="background-color: #8696FE; color: #f5f1f1;">
+                <tr>
+                    <th>No</th>
+                    <th>Method</th>
+                    <th>Querry Set</th>
+                    <th>Querry</th>
+                    <th>Result</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr>
+                    <td>1</td>
+                    <td>Q</td>
+                    <td><b style="color: #3214a9;">.filter()</b></td>
+                    <td><b style="color: #1faa42;">Student.objects.filter(Q(marks__gte = 33) & Q(marks__lt = 50))</b></td>
+                    <td><a class="btn btn-danger btn-sm" href="{% url 'Q_marks' %}">
+                        <span class="glyphicon glyphicon-trash">Go</span></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Q</td>
+                    <td><b style="color: #3214a9;">.filter()</b></td>
+                    <td><b style="color: #1faa42;">Student.objects.filter(Q(publisher__name__exact='Jupiter Book House') | Q(publisher__name__exact='Onupom Book House'))</b></td>
+                    <td><a class="btn btn-danger btn-sm" href="{% url 'Q_book_publisher' %}">
+                        <span class="glyphicon glyphicon-trash">Go</span></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Q</td>
+                    <td><b style="color: #3214a9;">.filter()</b></td>
+                    <td><b style="color: #1faa42;">Student.objects.filter(Q(books__authors__name__iexact='Mr Rakib') & Q(books__price__exact = 150))</b></td>
+                    <td><a class="btn btn-danger btn-sm" href="{% url 'Q_storage_book_auther' %}">
+                        <span class="glyphicon glyphicon-trash">Go</span></a>
+                    </td>
+                </tr>
+                
+                
+
+
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <h4 class="text-center" style="margin-top: 15px; color: #14a934;"><b>Q Object</b></h4>
+        <img src="{% static 'img/img/Q_query.jpg' %}" alt="">
+    </div>
+</div>
+{% endblock body %}
+
+
+{% block js %}
+<!-------------------------- Java Scripts Start -------------------------->
+ <!-- For Datatable -->
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#stu_table').DataTable({
+        "aLengthMenu": [[3, 5, 10, 25, -1], [3, 5, 10, 25, "All"]],
+            "iDisplayLength": 10
+        }
+        );
+    } );
+</script>
+<!-------------------------- Java Scripts End -------------------------->
+{% endblock js %}
