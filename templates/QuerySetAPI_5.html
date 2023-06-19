@@ -70,7 +70,7 @@
                     <td>2</td>
                     <td>Q</td>
                     <td><b style="color: #3214a9;">.filter()</b></td>
-                    <td><b style="color: #1faa42;">Student.objects.filter(Q(publisher__name__exact='Jupiter Book House') | Q(publisher__name__exact='Onupom Book House'))</b></td>
+                    <td><b style="color: #1faa42;">Book.objects.filter(Q(publisher__name__exact='Jupiter Book House') | Q(publisher__name__exact='Onupom Book House'))</b></td>
                     <td><a class="btn btn-danger btn-sm" href="{% url 'Q_book_publisher' %}">
                         <span class="glyphicon glyphicon-trash">Go</span></a>
                     </td>
@@ -79,8 +79,62 @@
                     <td>3</td>
                     <td>Q</td>
                     <td><b style="color: #3214a9;">.filter()</b></td>
-                    <td><b style="color: #1faa42;">Student.objects.filter(Q(books__authors__name__iexact='Mr Rakib') & Q(books__price__exact = 150))</b></td>
+                    <td><b style="color: #1faa42;">Store.objects.filter(Q(books__authors__name__iexact='Mr Rakib') & Q(books__price__exact = 150))</b></td>
                     <td><a class="btn btn-danger btn-sm" href="{% url 'Q_storage_book_auther' %}">
+                        <span class="glyphicon glyphicon-trash">Go</span></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>4.1</td>
+                    <td></td>
+                    <td><b style="color: #3214a9;">Class</b></td>
+                    <td><b style="color: #1faa42;">Book.objects.filter(  )</b></td>
+                    <td><a class="btn btn-danger btn-sm" href="{% url 'FilteredBooksView' %}">
+                        <span class="glyphicon glyphicon-trash">Go</span></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>4.2</td>
+                    <td></td>
+                    <td><b style="color: #3214a9;">Function</b></td>
+                    <td><b style="color: #1faa42;">Book.objects.filter(  )</b></td>
+                    <td><a class="btn btn-danger btn-sm" href="{% url 'Q_book__auther' %}">
+                        <span class="glyphicon glyphicon-trash">Go</span></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>Q</td>
+                    <td><b style="color: #3214a9;">.filter( )</b></td>
+                    <td><b style="color: #1faa42;">Book.objects.filter( Q(name__icontains = 'Python') & (Q( price__gt = 400) & Q( price__lt = 600)) )</b></td>
+                    <td><a class="btn btn-danger btn-sm" href="{% url 'Q_book__name_price' %}">
+                        <span class="glyphicon glyphicon-trash">Go</span></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td>Q</td>
+                    <td><b style="color: #3214a9;">.filter( )</b></td>
+                    <td><b style="color: #1faa42;">Book.objects.filter( Q(name__icontains = 'Python') & (Q( price__gt = 700) & Q( price__lt = 1000)) )</b></td>
+                    <td><a class="btn btn-danger btn-sm" href="{% url 'Q_book__name_price_2' %}">
+                        <span class="glyphicon glyphicon-trash">Go</span></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>7</td>
+                    <td>Q</td>
+                    <td><b style="color: #3214a9;">.filter( )</b></td>
+                    <td><b style="color: #1faa42;">Student.objects.filter( ~Q(result__exact = status) )</b></td>
+                    <td><a class="btn btn-danger btn-sm" href="{% url 'student__not_pass' %}">
+                        <span class="glyphicon glyphicon-trash">Go</span></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>8</td>
+                    <td>Q</td>
+                    <td><b style="color: #3214a9;">.filter( )</b></td>
+                    <td><b style="color: #1faa42;">Student.objects.filter( .filter( Q(city__icontains = city) & (~Q(result__exact = status)) ) )</b></td>
+                    <td><a class="btn btn-danger btn-sm" href="{% url 'student__city_pass' %}">
                         <span class="glyphicon glyphicon-trash">Go</span></a>
                     </td>
                 </tr>

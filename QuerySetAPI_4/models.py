@@ -57,7 +57,7 @@ class Store(models.Model):
 
 
     # @property
-    # def get_authors(self):  # উপরের টি , এটি এবং নিচের টি একই, যে কোন টি use করা যাবে।
+    # def get_authors(self):  # উপরের টি এবং এটি এবং নিচের টি , যে কোন টি use করা যাবে।
     #     authors = []
     #     for book in self.books.all():
     #         authors.extend(book.authors.all())

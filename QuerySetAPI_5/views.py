@@ -6,7 +6,7 @@ from django.core.paginator import Paginator
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import IntegrityError
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpRequest
 from datetime import datetime, date, time
 
 from django.db.models import Q, F, Value, FloatField
@@ -70,7 +70,198 @@ def Q_storage_book_auther(request):
     }    
     return render(request, 'all_query.html', data)
 
-
     
 
+
+from django.views import View
+class FilteredBooksView(View):
+    def get(self, request):
+        # Get the authors with names 'a' and 'b'
+        authors = Author.objects.filter(name__in=['Mr Rakib', 'Md Rasel'])
+        
+        # Get the books that have only the authors 'a' and 'b'
+        books = Book.objects.filter(authors__in=authors).exclude(authors__in=Author.objects.exclude(name__in=['Mr Rakib', 'Md Rasel']))
+        
+        # Exclude books that have any other authors
+        for author in authors:
+            books = books.filter(authors=author)
+
+        books = books.distinct()  # Eliminate duplicates
+        
+
+        data = {
+            'book': books,
+
+            'SQL_querry': books.query,
+            'total_student': Book.objects.all().count(),
+            'querry_title': "authors = Author.objects.filter(name__in=['Mr Rakib', 'Md Rasel']) and Book.objects.filter(authors__in=authors).exclude(authors__in=Author.objects.exclude(name__in=['Mr Rakib', 'Md Rasel']))",
+            'total_obj': books.count(),
+            'descripetion': "আমার কাছে 2টি বই আছে একটির নাম x এবং অন্যটির নাম y. x এর লেখক a এবং b, এবং আরেকটি বই y এর লেখক a,b, এবং c. এখন আমি ফিল্টার করতে চাই, যেই book এর  লেখক শুধুমাত্র a এবং b, আর কেউ নয়, সেই বইটির query set.",
+        }    
+        return render(request, 'all_query.html', data)
+    
+
+
+
+def Q_book__auther(request):
+
+    # list_of_authors = ['Mr Rakib', 'Md Hassan', 'Tanin']
+    # list_of_authors = ['Md Rasel', 'Tanin']
+    # list_of_authors = ['a', 'b']
+    list_of_authors = ['a', 'b', 'c']
+
+    # Get the authors with names 'name-1' and 'name-2' এখানে Given author দের filter করে বের করা হয়েছে।
+    authors = Author.objects.filter(name__in = list_of_authors)
+
+
+    # Get the books that have only the authors 'a' and 'b'
+    books = Book.objects.filter(authors__in=authors).exclude(authors__in=Author.objects.exclude(name__in = list_of_authors))
+
+    # Exclude books that have any other authors ( author a,b,c book = y এবং author a,b = x,  এবং author a,c = z)
+    # নিচের for loop টি যদি না দেই, তবে এর result আসবে <QuerySet [<Book: x>, <Book: y>, <Book: z>]>
+    # এখানে ঐ সকল book কে বাদ দেয়া হয়েছে, author a,b = x,  এবং author a,c = z তবে correct result আসবে <QuerySet [<Book: y>]>
+    for author in authors:
+        books = books.filter(authors=author)
+
+    books = books.distinct()  # Eliminate duplicates
+
+    # print("--------------------")
+    # print(authors)
+    # print(books)
+    # print("--------------------")
+
+    data = {
+        'book': books,
+
+        'SQL_querry': books.query,
+        'total_student': Book.objects.all().count(),
+        'querry_title': "authors = Author.objects.filter(name__in=['Mr Rakib', 'Md Rasel']) and Book.objects.filter(authors__in=authors).exclude(authors__in=Author.objects.exclude(name__in=['Mr Rakib', 'Md Rasel']))",
+        'total_obj': books.count(),
+        'descripetion': "আমার কাছে 2টি বই আছে একটির নাম x এবং অন্যটির নাম y. x এর লেখক a এবং b, এবং আরেকটি বই y এর লেখক a,b, এবং c. এখন আমি ফিল্টার করতে চাই, যেই book এর  লেখক শুধুমাত্র a এবং b, আর কেউ নয়, সেই বইটির query set.",
+    }    
+    return render(request, 'all_query.html', data)
+
+
+
+
+
+def Q_book__name_price(request):
+    
+    book_name = 'python'
+    min_price = 400
+    max_price = 600
+
+    books = Book.objects.filter( Q(name__icontains = book_name) & (Q( price__gt = min_price) & Q( price__lt = max_price)) )
+
+
+    data = {
+        'book': books,
+
+        'SQL_querry': books.query,
+        'total_student': Book.objects.all().count(),
+
+        'querry_title': "Book.objects.filter( Q(name__icontains = book_name) & (Q( price__gt = min_price) & Q( price__lt = max_price)) )",
+        'total_obj': books.count(),
+        'descripetion': "বই এর নাম python এবং এর price min > 400 এবং max price  < 600 এমন book কোনটি ?",
+    }    
+    return render(request, 'all_query.html', data)
+
+
+def Q_book__name_price_2(request):
+    
+    book_name = 'python'
+    min_price = 500
+    max_price = 1000
+
+    books = Book.objects.filter( Q(name__icontains = book_name) & (Q( price__gt = min_price) & Q( price__lt = max_price)) )
+
+    data = {
+        'book': books,
+
+        'SQL_querry': books.query,
+        'total_student': Book.objects.all().count(),
+
+        'querry_title': "Book.objects.filter( Q(name__icontains = book_name) & (Q( price__gt = min_price) & Q( price__lt = max_price)) )",
+
+        'total_obj': books.count(),
+
+        'descripetion': "বই এর নাম python এবং এর price min > 500 এবং max price  < 1000 এমন book কোনটি ?",
+    }    
+    return render(request, 'all_query.html', data)
+
+
+def student__not_pass(request):
+    
+    status = 'Pass'
+
+    std_obj = Student.objects.filter( ~Q(result__exact = status) )
+    print("--------------------")
+    print(std_obj)
+    print("--------------------")
+   
+    data = {
+        'std_obj': std_obj,
+
+        'SQL_querry': std_obj.query, #'Student' object has no attribute 'query'
+        'total_student': Student.objects.all().count(),
+        'querry_title': ".filter( ~Q(result__exact = status) )",
+        'total_obj': std_obj.count(),
+        'descripetion': "যে সকল student pass করে নি।",
+    }    
+    return render(request, 'all_query.html', data)
+
+
+def student__city_pass(request):
+    
+    city = 'Dhaka'
+    status = 'Pass'
+    # std_obj = Student.objects.filter(Q(city__icontains = city) & Q(result__exact = status))
+    std_obj = Student.objects.filter( Q(city__icontains = city) & (~Q(result__exact = status)) )
+   
+    data = {
+        'std_obj': std_obj,
+
+        'SQL_querry': std_obj.query, #'Student' object has no attribute 'query'
+        'total_student': Student.objects.all().count(),
+        'querry_title': ".filter( Q(city__icontains = city) & (~Q(result__exact = status)) )",
+        'total_obj': std_obj.count(),
+        'descripetion': "Studen দের city = Dhaka এবং তারা pass করে নি।",
+    }    
+    return render(request, 'all_query.html', data)
+
+
+
+
+
+
+
+# def filtered_books_view(request):
+#     # Get the authors with names 'Mr Rakib' and 'Md Rasel'
+#     authors = Author.objects.filter(name__in=['Mr Rakib', 'Md Rasel'])
+
+#     # Get the books that have only the authors 'Mr Rakib' and 'Md Rasel'
+#     books = Book.objects.filter(authors__in=authors).exclude(~Q(authors__name__in=['Mr Rakib', 'Md Rasel'])).distinct()
+
+
+
+
+
+# def test_auth(request):
+#     auth_list = ['a', 'b', 'c']
+
+#     # books = Book.objects.filter(authors__in = auth_list).annotate(num_authors=Count('authors')).filter(num_authors=2)
+
+
+#     # Assuming you have two authors: author_x and author_y
+#     # Retrieve books written by authors X and Y
+#     books = Book.objects.filter(authors__in = auth_list)
+
+#     # Exclude books written by any other author
+#     books = books.exclude(authors__in=Author.objects.exclude(Q(pk=author_x.pk) | Q(pk=author_y.pk)))
+
+#     print("---------------------------------")
+#     print(books)
+#     print("---------------------------------")
+
+#     return HttpRequest('test')
     
