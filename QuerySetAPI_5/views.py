@@ -104,13 +104,12 @@ class FilteredBooksView(View):
 
 
 def Q_book__auther(request):
-
     # list_of_authors = ['Mr Rakib', 'Md Hassan', 'Tanin']
     # list_of_authors = ['Md Rasel', 'Tanin']
     # list_of_authors = ['a', 'b']
     list_of_authors = ['a', 'b', 'c']
 
-    # Get the authors with names 'name-1' and 'name-2' এখানে Given author দের filter করে বের করা হয়েছে।
+    # Get the authors with names 'a' and 'b' এখানে Given author দের filter করে বের করা হয়েছে।
     authors = Author.objects.filter(name__in = list_of_authors)
 
 
@@ -246,22 +245,15 @@ def student__city_pass(request):
 
 
 
-# def test_auth(request):
-#     auth_list = ['a', 'b', 'c']
+def test_auth(request):
+    # auth_list = ['a', 'b', 'c']
+    # auth_list = ['a', 'b']
 
-#     # books = Book.objects.filter(authors__in = auth_list).annotate(num_authors=Count('authors')).filter(num_authors=2)
+    books = Book.objects.filter( Q(authors__name__iexact = 'a, b') )
+    for book in books:
+        print("---------------------------------")
+        print(book.name)
+        print("---------------------------------")
 
-
-#     # Assuming you have two authors: author_x and author_y
-#     # Retrieve books written by authors X and Y
-#     books = Book.objects.filter(authors__in = auth_list)
-
-#     # Exclude books written by any other author
-#     books = books.exclude(authors__in=Author.objects.exclude(Q(pk=author_x.pk) | Q(pk=author_y.pk)))
-
-#     print("---------------------------------")
-#     print(books)
-#     print("---------------------------------")
-
-#     return HttpRequest('test')
+    return HttpResponse('test')
     

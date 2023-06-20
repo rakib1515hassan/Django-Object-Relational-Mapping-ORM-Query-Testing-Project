@@ -18,5 +18,5 @@ urlpatterns = [
     path('student__city_pass/', student__city_pass, name='student__city_pass'), 
 
 
-    # path('test_auth/', test_auth),       
+    path('test_auth/', test_auth),       
 ]
