@@ -247,13 +247,23 @@ def student__city_pass(request):
 
 def test_auth(request):
     # auth_list = ['a', 'b', 'c']
-    # auth_list = ['a', 'b']
+    auth_list = ['a', 'b']
 
-    books = Book.objects.filter( Q(authors__name__iexact = 'a, b') )
-    for book in books:
-        print("---------------------------------")
-        print(book.name)
-        print("---------------------------------")
+    authors = Author.objects.filter(name__in = auth_list)
+
+    # books = Book.objects.filter( Q(authors__name__iexact = 'a, b') )
+    # books = Book.objects.filter( Q(authors__name__in = 'a') | Q(authors__name__in = 'b') )
+    books = Book.objects.annotate(authors_count=Count('authors')).filter( Q(authors__name__in = 'a') & Q(authors__name__in ='b') & Q(authors_count=2) )
+
+
+    print("---------------------------------")
+    print(books)
+    print("---------------------------------")
+
+    # for book in books:
+    #     print("---------------------------------")
+    #     print(book)
+    #     print("---------------------------------")
 
     return HttpResponse('test')
     
